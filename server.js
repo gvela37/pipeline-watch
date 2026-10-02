@@ -1,6 +1,6 @@
 const http = require("node:http");
 
-const port = 3000;
+const port = Number(process.env.PORT || 3000);
 
 const server = http.createServer((request, response) => {
   console.log(`${request.method} ${request.url}`);

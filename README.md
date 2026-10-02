@@ -18,6 +18,27 @@ The server listens on http://localhost:3000.
 
 Stop it with Ctrl+C.
 
+## Configure the port
+
+The server uses port 3000 by default.
+
+To choose another port in PowerShell:
+
+```powershell
+$env:PORT = "3001"
+npm.cmd start
+```
+
+Stop the server with Ctrl+C before changing the configuration.
+
+To remove the override:
+
+```powershell
+Remove-Item Env:\PORT
+```
+
+The next server process will use the default port.
+
 ## Endpoints
 
 | Method | Path | Status | Response |
