@@ -1,0 +1,34 @@
+# Pipeline Watch
+
+A monitoring app built to practice APIs, testing, containers,
+CI/CD, and troubleshooting.
+
+## Requirements
+
+- Node.js 24
+- npm
+
+## Run locally
+
+```powershell
+npm.cmd start
+```
+
+The server listens on http://localhost:3000.
+
+Stop it with Ctrl+C.
+
+## Endpoints
+
+| Method | Path | Status | Response |
+|--------|------|--------|----------|
+| GET | /health | 200 | {"status":"ok"} |
+| GET | /anything | 404 | {"error":"Not found"} |
+
+The health endpoint confirms that the server can respond.
+It does not yet check a database or external services.
+
+## Tests
+
+Automated tests have not been implemented yet.
+The current npm test script is a placeholder.
