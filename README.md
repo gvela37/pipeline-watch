@@ -51,5 +51,13 @@ It does not yet check a database or external services.
 
 ## Tests
 
-Automated tests have not been implemented yet.
-The current npm test script is a placeholder.
+Run the automated configuration tests:
+
+```powershell
+npm.cmd test
+```
+
+The tests cover the default port, a configured port,
+allowed boundaries, and invalid values.
+
+Invalid PORT configuration stops the server with exit code 1.

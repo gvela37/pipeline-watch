@@ -1,6 +1,15 @@
 const http = require("node:http");
 
-const port = Number(process.env.PORT || 3000);
+const { parsePort } = require("./config");
+
+let port;
+
+try {
+  port = parsePort(process.env.PORT);
+} catch (error) {
+  console.error(error.message);
+  process.exit(1);
+}
 
 const server = http.createServer((request, response) => {
   console.log(`${request.method} ${request.url}`);
