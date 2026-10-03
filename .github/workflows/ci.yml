@@ -9,18 +9,57 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  check:
+    name: Check syntax
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           package-manager-cache: false
 
-      - name: Run tests
+      - name: Check application syntax
+        run: npm run check
+
+  test:
+    name: Test application
+    needs: check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Run automated tests
         run: npm test
+
+  package:
+    name: Package application
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Create application package
+        run: npm run package
+
+      - name: Save application package
+        uses: actions/upload-artifact@v7
+        with:
+          name: pipeline-watch-${{ github.sha }}
+          path: pipeline-watch-*.tgz
+          if-no-files-found: error
+          retention-days: 3
