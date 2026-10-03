@@ -57,7 +57,7 @@ Run the automated configuration tests:
 npm.cmd test
 ```
 
-The tests cover the default port, a configured port,
-allowed boundaries, and invalid values.
+The tests cover port configuration and HTTP responses:
+GET /health returns 200, and an unknown route returns 404.
 
 Invalid PORT configuration stops the server with exit code 1.
