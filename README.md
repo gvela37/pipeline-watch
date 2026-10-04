@@ -61,3 +61,31 @@ The tests cover port configuration and HTTP responses:
 GET /health returns 200, and an unknown route returns 404.
 
 Invalid PORT configuration stops the server with exit code 1.
+
+## Run with Docker Compose
+
+Requires Docker Desktop with the engine running.
+
+Build and start the app:
+
+```powershell
+docker compose up --build -d
+```
+
+Health endpoint: http://localhost:8080/health
+
+View status and logs:
+
+```powershell
+docker compose ps
+docker compose logs app
+```
+
+Stop and remove the containers and network:
+
+```powershell
+docker compose down
+```
+
+Compose configures PORT=3001 inside the container and maps
+localhost:8080 on the host to container port 3001.

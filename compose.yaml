@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+    image: pipeline-watch:local
+    ports:
+      - "127.0.0.1:8080:3001"
+    environment:
+      PORT: "3001"
