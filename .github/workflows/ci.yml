@@ -63,3 +63,44 @@ jobs:
           path: pipeline-watch-*.tgz
           if-no-files-found: error
           retention-days: 3
+
+          
+  container:
+    name: Build and smoke-test container
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Build image
+        run: docker build -t pipeline-watch:ci .
+
+      - name: Start container
+        run: |
+          docker run -d \
+            --name pipeline-watch-ci \
+            -e PORT=3001 \
+            -p 127.0.0.1:8080:3001 \
+            pipeline-watch:ci
+
+      - name: Check health endpoint
+        run: |
+          curl --fail --silent --show-error \
+            --retry 10 \
+            --retry-connrefused \
+            --retry-delay 1 \
+            --max-time 3 \
+            http://127.0.0.1:8080/health \
+            --output health.json
+
+          node -e "const assert = require('node:assert/strict'); const fs = require('node:fs'); assert.deepEqual(JSON.parse(fs.readFileSync('health.json', 'utf8')), { status: 'ok' });"
+
+      - name: Show container logs
+        if: always()
+        run: docker logs pipeline-watch-ci
+
+      - name: Clean up container
+        if: always()
+        run: docker rm -f pipeline-watch-ci
