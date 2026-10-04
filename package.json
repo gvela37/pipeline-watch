@@ -5,10 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test",
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check app.js && node --check server.js && node --check config.js",
+    "package": "npm pack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "files": [
+  "app.js",
+  "server.js",
+  "config.js"
+	]
 }
